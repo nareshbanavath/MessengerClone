@@ -18,11 +18,10 @@ struct InboxRowView: View {
                 Text("Naresh Nayak")
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                Text("Some text message need to sent through this mediumdsafdsaf")
+                Text("Some text message need to sent through this medium")
                     .font(.subheadline)
                     .foregroundStyle(.gray)
                     .lineLimit(2)
-                    .frame(maxWidth: UIScreen.main.bounds.width - 100)
             }
             HStack(alignment: .center, spacing: 4) {
                 Text("Yesterday")
