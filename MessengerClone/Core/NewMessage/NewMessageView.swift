@@ -27,10 +27,7 @@ struct NewMessageView: View {
                 ForEach(0...10, id: \.self){ index in
                     VStack {
                         HStack {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .frame(width: 32, height: 32)
-                                .foregroundStyle(Color(.systemGray4))
+                            CircularProfileImageView(user: .MOCK_USER, size: .xSmall)
                             Text("User Numer \(index)")
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
