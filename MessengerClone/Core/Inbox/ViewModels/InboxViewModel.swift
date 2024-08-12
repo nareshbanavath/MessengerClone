@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import Firebase
 
+@MainActor
 class InboxViewModel: ObservableObject {
     @Published var currentUser: User?
     private var cancellables = Set<AnyCancellable>()
@@ -16,7 +17,6 @@ class InboxViewModel: ObservableObject {
     init(){
         setupSubscribers()
     }
-    
     private func setupSubscribers(){
         UserService.shared.$currentUser.sink { [weak self] currentUser in
             self?.currentUser = currentUser

@@ -10,6 +10,8 @@ import SwiftUI
 struct InboxView: View {
     @State private var showNewMessageView : Bool = false
     @StateObject var viewModel = InboxViewModel()
+    @State var selectedUser: User?
+    @State var showChat: Bool = false
     var user: User? {
         viewModel.currentUser
     }
@@ -28,6 +30,14 @@ struct InboxView: View {
             .navigationDestination(for: User.self, destination: { user in
                 ProfileView(user: user)
             })
+            .navigationDestination(isPresented: $showChat, destination: {
+                if let user = selectedUser {
+                    ChatView(user: user)
+                }
+            })
+            .onChange(of: selectedUser) {
+               showChat = selectedUser != nil
+            }
             .scrollIndicators(.hidden)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -53,7 +63,7 @@ struct InboxView: View {
                 }
             }
             .fullScreenCover(isPresented: $showNewMessageView) {
-               NewMessageView()
+                NewMessageView(selectedUser: $selectedUser)
             }
         }
     }
