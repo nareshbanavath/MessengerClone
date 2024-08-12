@@ -25,7 +25,7 @@ struct ProfileView: View {
                         CircularProfileImageView(user: user, size: .xLarge)
                     }
                 }
-                Text("Naresh Nayak")
+                Text(user.fullName)
                     .font(.title2)
                     .fontWeight(.semibold)
                 
@@ -44,7 +44,7 @@ struct ProfileView: View {
                     }
                     Section {
                         Button("Logout") {
-                            
+                            AuthService.shared.signOut()
                         }
                         Button("Delete Account") {
                             

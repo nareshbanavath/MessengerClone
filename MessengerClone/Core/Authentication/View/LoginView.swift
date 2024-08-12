@@ -9,8 +9,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct LoginView: View {
-    @State var emailField : String = ""
-    @State var passwordField : String = ""
+    @StateObject var viewModel = LoginViewModel()
 
     var body: some View {
         NavigationStack {
@@ -27,9 +26,11 @@ struct LoginView: View {
                 
                 VStack {
                     Group {
-                        TextField("Enter your email", text: $emailField)
-                        SecureField("Enter your password", text: $emailField)
+                        TextField("Enter your email", text: $viewModel.email)
+                        SecureField("Enter your password", text: $viewModel.password)
                     }
+                    .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.never)
                     .font(.subheadline)
                     .padding(12)
                     .background(Color(.systemGray6))
@@ -54,7 +55,7 @@ struct LoginView: View {
                 
                 //4. login button
                 Button {
-                    print("Handle Login")
+                    Task { try await viewModel.login() }
                 } label: {
                     Text("Login")
                         .font(.subheadline)
