@@ -8,27 +8,32 @@
 import SwiftUI
 
 struct ChatMessageCell: View {
-    let isFromCurrentUser: Bool
+    let message: Message
+    private var isFromCurrentUser: Bool {
+        message.isFromCurrentUser
+    }
     var body: some View {
         HStack {
             if isFromCurrentUser {
-                Spacer()
-                Text("This text is from current user, so adjust its length")
-                    .font(.subheadline)
-                    .padding(12)
-                    .background(Color(.systemBlue))
-                    .foregroundStyle(.white)
-                    .clipShape(ChatBubble(isCurrentUser: isFromCurrentUser))
-                    .frame(maxWidth: UIScreen.main.bounds.width * 0.5)
+                HStack(alignment: .bottom, spacing: 0) {
+                    Spacer()
+                    Text(message.messageText)
+                        .font(.subheadline)
+                        .padding(12)
+                        .background(Color(.systemBlue))
+                        .foregroundStyle(.white)
+                        .clipShape(ChatBubble(isCurrentUser:  isFromCurrentUser))
+                        .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .trailing)
+                }
             } else {
                 HStack(alignment: .bottom, spacing: 8.0) {
-                    CircularProfileImageView(user: .MOCK_USER, size: .xxSmall)
-                    Text("This text is from  other user")
+                    CircularProfileImageView(user: message.user, size: .xxSmall)
+                    Text(message.messageText)
                         .font(.subheadline)
                         .padding(12)
                         .background(Color(.systemGray5))
                         .foregroundStyle(.black)
-                        .clipShape(ChatBubble(isCurrentUser: isFromCurrentUser))
+                        .clipShape(ChatBubble(isCurrentUser:  isFromCurrentUser))
                         .frame(maxWidth: UIScreen.main.bounds.width * 0.5, alignment: .leading)
                     Spacer()
                     
@@ -41,6 +46,3 @@ struct ChatMessageCell: View {
     }
 }
 
-#Preview {
-    ChatMessageCell(isFromCurrentUser: false)
-}
