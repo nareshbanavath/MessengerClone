@@ -20,8 +20,11 @@ struct InboxView: View {
             ScrollView {
                 ActiveNowView()
                 List {
-                    ForEach(0...10, id: \.self) { message in
-                        InboxRowView()
+                    ForEach(viewModel.recentMessages) { message in
+                        InboxRowView(message: message)
+                            .onTapGesture {
+                                selectedUser = message.user
+                            }
                     }
                 }
                 .listStyle(.plain)
@@ -54,6 +57,7 @@ struct InboxView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         showNewMessageView.toggle()
+                        selectedUser = nil
                     }, label: {
                        Image(systemName: "square.and.pencil.circle.fill")
                             .resizable()

@@ -8,19 +8,21 @@
 import SwiftUI
 
 struct InboxRowView: View {
+    let message: Message
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            CircularProfileImageView(user: .MOCK_USER, size: .medium)
+            CircularProfileImageView(user: message.user, size: .medium)
             
             VStack(alignment: .leading){
-                Text("Naresh Nayak")
+                Text(message.user?.fullName ?? "")
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                Text("Some text message need to sent through this medium")
+                Text(message.messageText)
                     .font(.subheadline)
                     .foregroundStyle(.gray)
                     .lineLimit(2)
             }
+            Spacer()
             HStack(alignment: .center, spacing: 4) {
                 Text("Yesterday")
                 Image(systemName: "chevron.right")
@@ -33,7 +35,7 @@ struct InboxRowView: View {
     }
 }
 
-#Preview {
-    InboxRowView()
-        .padding()
-}
+//#Preview {
+//    InboxRowView()
+//        .padding()
+//}
