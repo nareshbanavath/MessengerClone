@@ -24,7 +24,7 @@ struct InboxRowView: View {
             }
             Spacer()
             HStack(alignment: .center, spacing: 4) {
-                Text("Yesterday")
+                Text(message.timeStampString)
                 Image(systemName: "chevron.right")
             }
             .font(.footnote)
