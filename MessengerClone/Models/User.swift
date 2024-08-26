@@ -15,6 +15,12 @@ struct User: Codable, Identifiable, Hashable {
     var id: String {
         return uid ?? UUID().uuidString
     }
+    
+    var firstName: String {
+        let formatter = PersonNameComponentsFormatter()
+        let components = formatter.personNameComponents(from: fullName)
+        return components?.givenName ?? fullName
+    }
 }
 extension User {
     static let MOCK_USER = User(fullName: "Naresh Banavath", email: "naresh.banavath@gmail.com", profileImageURL: "batman")

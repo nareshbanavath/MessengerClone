@@ -20,8 +20,10 @@ class UserService {
         self.currentUser = user
         debugPrint("DEBUG: current User in Service \(user)")
      }
-    static func fetchAllUsers() async throws -> [User] {
-        let snapShot = try await Firestore.firestore().collection("users").getDocuments()
+    static func fetchAllUsers(limit: Int? = nil) async throws -> [User] {
+        let query = FirebaseConstants.UserCollection
+        if let limit {  query.limit(to: limit) }
+        let snapShot = try await query.getDocuments()
         let users = snapShot.documents.compactMap({ try? $0.data(as: User.self) })
         return users
     }

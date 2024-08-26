@@ -11,7 +11,7 @@ extension Date {
     private var timeFormatter : DateFormatter {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = "hh:mm a"
         return formatter
     }
     private var dayFormatter : DateFormatter {
@@ -31,7 +31,11 @@ extension Date {
     
     func timeStampString() -> String {
         if Calendar.current.isDateInToday(self) {
-            return timeString()
+            if timeString().prefix(1) == "0" {
+                return String(timeString().dropFirst())
+            } else {
+                return timeString()
+            }
         } else if Calendar.current.isDateInYesterday(self) {
             return "Yesterday"
         } else {
