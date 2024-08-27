@@ -33,6 +33,7 @@ struct InboxView: View {
                     }
                 }
             }
+            .searchable(text: $viewModel.searchText)
             .navigationTitle("Charts")
             .navigationBarTitleDisplayMode(.inline)
             .listStyle(.plain)

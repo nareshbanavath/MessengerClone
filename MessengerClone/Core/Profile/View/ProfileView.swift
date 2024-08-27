@@ -32,13 +32,18 @@ struct ProfileView: View {
                 List {
                     Section {
                         ForEach(SettingsOptionsViewModel.allCases) { option in
-                            HStack {
-                                Image(systemName: option.imageName)
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundStyle(option.imageBackgroundColor)
-                                Text(option.title)
-                                    .font(.subheadline)
+                            Button {
+                                viewModel.settingsOptionTapped(type: option)
+                            } label: {
+                                HStack {
+                                    Image(systemName: option.imageName)
+                                        .resizable()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundStyle(option.imageBackgroundColor)
+                                    Text(option.title)
+                                        .font(.subheadline)
+                                }
+                                .foregroundStyle(Color(UIColor.systemWhite))
                             }
                         }
                     }
@@ -59,4 +64,11 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView(user: .MOCK_USER)
+}
+extension UIColor {
+    static var systemWhite: UIColor {
+        UIColor { traitColleciton in
+            traitColleciton.userInterfaceStyle == .dark ? .white : .black
+        }
+    }
 }

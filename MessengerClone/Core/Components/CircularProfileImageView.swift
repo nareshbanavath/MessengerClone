@@ -30,11 +30,20 @@ struct CircularProfileImageView: View {
     let size : ProfileImageSize
     var body: some View {
         if let imageUrl = user?.profileImageURL {
-            Image(imageUrl)
-                .resizable()
-                .scaledToFill()
-                .frame(width: size.dimension, height: size.dimension)
-                .clipShape(Circle())
+            AsyncImage(url: URL(string: imageUrl)) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size.dimension, height: size.dimension)
+                    .clipShape(Circle())
+            } placeholder: {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .frame(width: size.dimension, height: size.dimension)
+                    .foregroundStyle(Color(.systemGray4))
+                
+            }
+               
         }else {
             Image(systemName: "person.circle.fill")
                 .resizable()

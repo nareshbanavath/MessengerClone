@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+
 class ChatViewModel: ObservableObject {
     @Published var messageText = ""
     @Published var messages = [Message]()
@@ -17,10 +19,18 @@ class ChatViewModel: ObservableObject {
     
     func observeMessages() {
         service.observeMessages { messages in
-            self.messages.append(contentsOf: messages)
+            if messages.count + 1 == messages.count {
+                withAnimation(.spring(.snappy, blendDuration: 0.250)) {
+                    self.messages.append(contentsOf: messages)
+                }
+            } else {
+                self.messages.append(contentsOf: messages)
+            }
         }
     }
     func sendMessage() {
+        let messageText = messageText
+        self.messageText = ""
         service.sendMessage(messageText)
     }
 }

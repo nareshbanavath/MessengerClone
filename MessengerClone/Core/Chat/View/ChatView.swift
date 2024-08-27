@@ -16,45 +16,51 @@ struct ChatView: View {
     }
     var body: some View {
         VStack {
-            ScrollView {
-                // Header
-                VStack {
-                    CircularProfileImageView(user: user, size: .xLarge)
-                    
-                    VStack(spacing: 4){
-                        Text(user.fullName)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                        Text("Messenger")
-                            .font(.footnote)
-                            .foregroundStyle(.gray)
+                ScrollView {
+                    // Header
+                    VStack {
+                        CircularProfileImageView(user: user, size: .xLarge)
+                        
+                        VStack(spacing: 4){
+                            Text(user.fullName)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                            Text("Messenger")
+                                .font(.footnote)
+                                .foregroundStyle(.gray)
+                        }
                     }
-                }
-                // Messages
-                LazyVStack {
-                    ForEach(viewModel.messages) { message in
-                        ChatMessageCell(message: message)
+                    // Messages
+                    LazyVStack {
+                        ForEach(viewModel.messages) { message in
+                            ChatMessageCell(message: message)
+                        }
                     }
-                }
 
-            }
+                }
+                .defaultScrollAnchor(.bottom)
+
             // Message Input View
-            ZStack(alignment: .trailing) {
-                TextField("Message...", text: $viewModel.messageText, axis: .vertical)
-                    .font(.subheadline)
-                    .padding(16)
-                    .padding(.trailing,48)
-                    .background(Color(.systemGroupedBackground))
-                    .clipShape(Capsule())
-                Button(action: {
-                    viewModel.sendMessage()
-                    viewModel.messageText  = ""
-                    
-                }, label: {
-                    Text("Send")
-                        .fontWeight(.semibold)
+            HStack {
+                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Image(systemName: "paperclip")
                 })
-                .padding(.horizontal)
+                ZStack(alignment: .trailing) {
+                    TextField("Message...", text: $viewModel.messageText, axis: .vertical)
+                        .font(.subheadline)
+                        .padding(16)
+                        .padding(.trailing,48)
+                        .background(Color(.systemGroupedBackground))
+                        .clipShape(Capsule())
+                    Button(action: {
+                        viewModel.sendMessage()
+                        
+                    }, label: {
+                        Text("Send")
+                            .fontWeight(.semibold)
+                    })
+                    .padding(.horizontal)
+                }
             }
             .padding()
         }

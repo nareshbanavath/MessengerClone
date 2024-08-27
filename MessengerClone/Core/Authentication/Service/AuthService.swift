@@ -55,6 +55,12 @@ class AuthService {
         guard let encodeUser = try? Firestore.Encoder().encode(user) else { return }
         try await Firestore.firestore().collection("users").document(id).setData(encodeUser)
     }
+    func updateUserData(profileImgURL: String) async throws {
+        guard var currentUser = UserService.shared.currentUser else { return }
+        currentUser.profileImageURL = profileImgURL
+        guard let encodeUser = try? Firestore.Encoder().encode(currentUser) else { return }
+        try await FirebaseConstants.UserCollection.document(currentUser.id).setData(encodeUser)
+    }
     private func loadCurrentUserData(){
         Task { try await UserService.shared.fetchCurrentUser() }
     }
